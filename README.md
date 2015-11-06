@@ -1,5 +1,5 @@
 # CSCI 5828 – Fall 2015
 
-## Presentation4 - Django
+## Presentation3 - HBase
 
-## Kaiyue An & Tiantian Xie
+## Kaiyue An
