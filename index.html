@@ -367,12 +367,12 @@ Post.objects.order_by('-created_date')
           <ul>
             <li>The URL patterns take the path of a request and decide which views should handle the request.</li>
             <li>Given a request, the URL patterns pass control to the views.</li>
+            <li>urls.py will define a variable called urlpatterns which is a list of calls to the url function.</li>
             <li>How do URLs work in Django？</li>
             <li>
             <pre><code data-trim contenteditable>
 url(r'^admin/', include(admin.site.urls))
 			</code></pre>
-			<li>urls.py will define a variable called urlpatterns which is a list of calls to the url function.</li>
 			</li>
           </ul>
 				</section>
@@ -382,10 +382,10 @@ url(r'^admin/', include(admin.site.urls))
           <ul>
             <li>How Django matches URLs to views?
             <ul>
-            	<li>regex, short for "regular expressions"</li>
+            	<li>regular expressions</li>
             </ul>
             </li>
-            <li>Here are a limited subset of the rules to regex:
+            <li>Here are a limited subset of the rules to regular expressions:
             <ul>
 				<li>'^': for beginning of the text</li>
 				<li>'$': for end of text</li>
@@ -395,6 +395,7 @@ url(r'^admin/', include(admin.site.urls))
 			</ul>
 			</li>
 			<li>URL function</li>
+			<li>URL pattern procedure</li>
           </ul>
 				</section>
 
@@ -439,13 +440,13 @@ url(r'', include('blog.urls')),
             <li>blog/views.py</li>
             <li>
             <pre><code data-trim contenteditable>
+from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
-			</code></pre>
-			</li>
-			<li>
-            <pre><code data-trim contenteditable>
-Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {'posts': posts})
 			</code></pre>
 			</li>
         </ul>
@@ -457,9 +458,43 @@ Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date
             <li>Template tags: display dynamic data.</li>
             <li>HTML: static</li>
             <li>Python: dynamic</li>
+            </ul>
+            
+        </ul>
+				</section>
+
+				<section>
+					<h2>Django templates(4)</h2>
+        <ul>
+            <li>Template syntax:
+            <ul>
             <li>{{ variable }}</li>
             <li>{% tag %}</li>
             <li>{{ variable|filter }}</li>
+            </ul>
+            </li>
+        </ul>
+				</section>
+
+				<section>
+					<h2>Django templates(5)</h2>
+        <ul>
+            <li>blog/templates/blog/post_list.html</li>
+            <li>
+            <pre><code data-trim contenteditable>
+<div>
+    <h1><a href="/">Django Girls Blog</a></h1>
+</div>
+
+{% for post in posts %}
+    <div>
+        <p>published: {{ post.published_date }}</p>
+        <h1><a href="">{{ post.title }}</a></h1>
+        <p>{{ post.text|linebreaks }}</p>
+    </div>
+{% endfor %}
+			</code></pre>
+			</li>
         </ul>
 				</section>
 
@@ -475,7 +510,10 @@ Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date
             <li>http://tutorial.djangogirls.org/en/index.html</li>
         </ul>
 				</section>
-				
+
+				<section>
+					<h2>Thank you!</h2>
+				</section>
 
 			</div>
 
